@@ -2,61 +2,57 @@ function orden(producto,cantidad) {
     return producto*cantidad
 }
 
-let producto;
-let cantidad;
-let rta = ""
+
+let producto ="a";
+let cantidad ="b";
+let rta="";
 
 do{
-    let producto = Number(prompt("Elija su producto ingresando su codigo:\ncod-1500 Whey protein ena $1500  \ncod-1000 Whey protein StartNutrition $1000\ncod-500 Whey protein Farmacity $500\n\nIngrese el cod:"))
+    
+    producto ="a"
+    while (isNaN(producto)||producto != 500 && producto != 1500 && producto != 1000) {
+        producto = Number(prompt("Elija su producto ingresando su codigo:\ncod-1500 Whey protein ena $1500  \ncod-1000 Whey protein StartNutrition $1000\ncod-500 Whey protein Farmacity $500\n\nIngrese el cod:"))
+    }
+    cantidad = "b"
+    while (isNaN(cantidad)||cantidad <= 0 || cantidad >= 51) {
+        cantidad = Number(prompt("Ingrese cuantas unidades desea (max permitido 50U.):"))
+    }
     
     
-    if ((producto == "1500")|| (producto == "1000")|| (producto == "500")){
-        
-        let cantidad= Number(prompt("Cuantas unidades desea?:"))
-        if (cantidad > 0){
+   
             
-            let pedido= orden(producto,cantidad)
-            alert("su monto es $"+ pedido)
+let pedido= orden(producto,cantidad)
+alert("su monto es $ "+ pedido +"\nPresione aceptar para elegir el medio de pago")
 
-            let pago= prompt("Seleccione el medio de pago:\nahora3\nahora6\nEfectivo").toLowerCase()
+let pago= prompt("Seleccione el medio de pago:\nAhora3\nAhora6\nEfectivo").toLowerCase()
             
         
-            switch (pago) {
-                case "ahora3":
-                    montoapagar = pedido /3
-                    alert("El monto a pagar por cuota es $"+ montoapagar)
-                    console.log("El monto a pagar por cuota es $"+ montoapagar)
-                    break;
+switch (pago) {
+    case "ahora3":
+        montoapagar = pedido /3
+        alert("El monto a pagar por cuota es $ "+ montoapagar + " en 3 cuotas sin interes")
+        console.log("El monto a pagar por cuota es $ "+ montoapagar +"\n El pago esta siendo procesado")
+        break;
         
-                case "ahora6":
-                    montoapagar = pedido /6
-                    alert("El monto a pagar por cuota es $"+ montoapagar)
-                    console.log("El monto a pagar por cuota es $"+ montoapagar)
-                    break;
+    case "ahora6":
+        montoapagar = pedido /6
+        alert("El monto a pagar por cuota es $ "+ montoapagar + " en 6 cuotas sin interes")
+        console.log("El monto a pagar por cuota es $ "+ montoapagar + "\nEl pago esta siendo procesado")
+        break;
         
-                case "efectivo":
-                    montoapagar = pedido 
-                    alert("El monto a pagar es $"+ montoapagar)
-                    console.log("El monto a pagar es $"+ montoapagar)
-                    break;
+    case "efectivo":
+        montoapagar = pedido 
+        alert("El monto a pagar es $"+ montoapagar + "\nPuede abonar con transferencia bancaria o al retirar")
+        console.log("El monto a pagar en efectivo es $ "+ montoapagar )
+        break;
             
-                default:
-                    alert("El medio de pago es incorrecto")
-                    break;
-            }
-
-
-        }
-        else{
-            alert("la cantidad ingresada es menor al permitido de una unidad")
-        }
-
-    }
-    else{
-        alert("El codigo ingresado es invalido")
-        
-    }
+    default:
+        alert("El medio de pago elegido o dato es incorrecto")
+        break;
+}
+    
 
 rta =prompt("ingrese esc para salir o cualquier tecla para continuar").toLowerCase()
 }
 while (rta != "esc")
+
