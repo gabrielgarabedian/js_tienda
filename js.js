@@ -1,3 +1,5 @@
+/*Entrega 1
+
 function orden(producto,cantidad) {
     return producto*cantidad
 }
@@ -29,21 +31,21 @@ let pago= prompt("Seleccione el medio de pago:\nAhora3\nAhora6\nEfectivo").toLow
         
 switch (pago) {
     case "ahora3":
-        montoapagar = pedido /3
-        alert("El monto a pagar por cuota es $ "+ montoapagar + " en 3 cuotas sin interes")
-        console.log("El monto a pagar por cuota es $ "+ montoapagar +"\n El pago esta siendo procesado")
+        montoApagar = pedido /3
+        alert("El monto a pagar por cuota es $ "+ montoApagar + " en 3 cuotas sin interes")
+        console.log("El monto a pagar por cuota es $ "+ montoApagar +"\n El pago esta siendo procesado")
         break;
         
     case "ahora6":
-        montoapagar = pedido /6
-        alert("El monto a pagar por cuota es $ "+ montoapagar + " en 6 cuotas sin interes")
-        console.log("El monto a pagar por cuota es $ "+ montoapagar + "\nEl pago esta siendo procesado")
+        montoApagar = pedido /6
+        alert("El monto a pagar por cuota es $ "+ montoApagar + " en 6 cuotas sin interes")
+        console.log("El monto a pagar por cuota es $ "+ montoApagar + "\nEl pago esta siendo procesado")
         break;
         
     case "efectivo":
-        montoapagar = pedido 
-        alert("El monto a pagar es $"+ montoapagar + "\nPuede abonar con transferencia bancaria o al retirar")
-        console.log("El monto a pagar en efectivo es $ "+ montoapagar )
+        montoApagar = pedido 
+        alert("El monto a pagar es $"+ montoApagar + "\nPuede abonar con transferencia bancaria o al retirar")
+        console.log("El monto a pagar en efectivo es $ "+ montoApagar )
         break;
             
     default:
@@ -55,4 +57,40 @@ switch (pago) {
 rta =prompt("ingrese esc para salir o cualquier tecla para continuar").toLowerCase()
 }
 while (rta != "esc")
+*/
+
+/*entrega 2*/
+
+class Productos{
+    constructor(id,name,description,price){
+        this.id= id
+        this.name= name
+        this.description= description
+        this.price= price
+    }
+}
+
+const listaProductos = [
+    new Productos(1000, "Whey Protein ENA", "Proteina de la marca ENA\nSabores: Frutilla - Manzana Verde - Chocolate",1500),
+    new Productos(500, "Whey Protein ENA", "Proteina de la marca Ultra tech\nSabores: Cookie - Vainilla - Chocolate",1000),
+    new Productos(1500, "Whey Protein StarNutrition","Proteina de leche de la marca StarNutrition",8000),
+    new Productos(750, "Creatina ENA 500g", "Creatina de la marca ENA de 500g\nSabor: Frutilla - Mango - Maracuya",790),
+    ]
+
+let acum =""
+
+listaProductos.forEach(productos => {
+    acum+="\ncod"+ productos.id +" "+ productos.name +"\n"+productos.description +"\n"+"$"+ productos.price +"\n"
+});
+alert( acum)
+
+
+let id =prompt("cod-1000 Whey Protein ENA\n\ncod-500 Whey Protein ENA\n\ncod-1500 Whey Protein StarNutrition \n\ncod-750 Creatina ENA 500g \n\nIngrese el codigo del producto deseado")
+
+function buscar(id){
+    return listaProductos.find(el => el.id == id)
+}
+
+const art = buscar(id)
+alert(art.name + " " + "$"+art.price)
 
