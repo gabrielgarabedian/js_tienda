@@ -70,16 +70,45 @@ class Productos{
     }
 }
 
-const listaProductos = [
-    new Productos(1000, "Whey Protein ENA", "Proteina de la marca ENA\nSabores: Frutilla - Manzana Verde - Chocolate",1500),
-    new Productos(500, "Whey Protein ENA", "Proteina de la marca Ultra tech\nSabores: Cookie - Vainilla - Chocolate",1000),
-    new Productos(1500, "Whey Protein StarNutrition","Proteina de leche de la marca StarNutrition",8000),
-    new Productos(750, "Creatina ENA 500g", "Creatina de la marca ENA de 500g\nSabor: Frutilla - Mango - Maracuya",790),
-    ]
+class ControllerProductos{
+    constructor(){
+        this.listProductos = []
+    }
 
-let acum =""
+    cargarProductos() {
+        this.listProductos= [
+            new Productos(1000, "Whey Protein ENA", "Proteina de la marca ENA\nSabores: Frutilla - Manzana Verde - Chocolate",1500),
+            new Productos(500, "Whey Protein ENA", "Proteina de la marca Ultra tech\nSabores: Cookie - Vainilla - Chocolate",1000),
+            new Productos(1500, "Whey Protein StarNutrition","Proteina de leche de la marca StarNutrition",8000),
+            new Productos(750, "Creatina ENA 500g", "Creatina de la marca ENA de 500g\nSabor: Frutilla - Mango - Maracuya",790),
+            ]
+    }
 
-listaProductos.forEach(productos => {
+    mostrarProductos(){
+
+        let acum =""
+        this.listProductos.forEach( productos => {
+            acum += "\ncod"+ productos.id +" "+ productos.name +"\n"+productos.description +"\n"+"$"+ productos.price +"\n"
+        })
+        return acum
+    }
+
+    buscarProductos(id){
+        return this.listProductos.find(el => el.id == id)
+    }
+}
+
+const controladorProductos= new ControllerProductos()
+controladorProductos.cargarProductos()
+
+controladorProductos.mostrarProductos()
+alert("Lista de productos:\n"+ controladorProductos.mostrarProductos())
+
+let id =prompt("cod-1000 Whey Protein ENA\n\ncod-500 Whey Protein ENA\n\ncod-1500 Whey Protein StarNutrition \n\ncod-750 Creatina ENA 500g \n\nIngrese el codigo del producto deseado")
+console.log(controladorProductos.buscarProductos(id))
+/*let acum =""
+
+listProductos.forEach(productos => {
     acum+="\ncod"+ productos.id +" "+ productos.name +"\n"+productos.description +"\n"+"$"+ productos.price +"\n"
 });
 alert( acum)
@@ -88,9 +117,9 @@ alert( acum)
 let id =prompt("cod-1000 Whey Protein ENA\n\ncod-500 Whey Protein ENA\n\ncod-1500 Whey Protein StarNutrition \n\ncod-750 Creatina ENA 500g \n\nIngrese el codigo del producto deseado")
 
 function buscar(id){
-    return listaProductos.find(el => el.id == id)
+    return listProductos.find(el => el.id == id)
 }
 
 const art = buscar(id)
-alert(art.name + " " + "$"+art.price)
+alert(art.name + " " + "$"+art.price) */
 
