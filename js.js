@@ -62,11 +62,13 @@ while (rta != "esc")
 /*entrega 2*/
 
 class Productos{
-    constructor(id,name,description,price){
+    constructor(id,name,description,price,stock){
         this.id= id
         this.name= name
         this.description= description
         this.price= price
+        this.stock= stock
+        this.cantidad= 1
     }
 }
 
@@ -75,37 +77,70 @@ class ControllerProductos{
         this.listProductos = []
     }
 
-    cargarProductos() {
+    cargar() {
         this.listProductos= [
-            new Productos(1000, "Whey Protein ENA", "Proteina de la marca ENA\nSabores: Frutilla - Manzana Verde - Chocolate",1500),
-            new Productos(500, "Whey Protein ENA", "Proteina de la marca Ultra tech\nSabores: Cookie - Vainilla - Chocolate",1000),
-            new Productos(1500, "Whey Protein StarNutrition","Proteina de leche de la marca StarNutrition",8000),
-            new Productos(750, "Creatina ENA 500g", "Creatina de la marca ENA de 500g\nSabor: Frutilla - Mango - Maracuya",790),
+            new Productos(1000, "Whey Protein ENA", "Proteina de la marca ENA\nSabores: Frutilla - Manzana Verde - Chocolate",1500,125),
+            new Productos(500, "Whey Protein ENA", "Proteina de la marca Ultra tech\nSabores: Cookie - Vainilla - Chocolate",1000,70),
+            new Productos(1500, "Whey Protein StarNutrition","Proteina de leche de la marca StarNutrition",8000,55),
+            new Productos(750, "Creatina ENA 500g", "Creatina de la marca ENA de 500g\nSabor: Frutilla - Mango - Maracuya",790,0),
             ]
     }
 
-    mostrarProductos(){
+    mostrar(){
 
         let acum =""
         this.listProductos.forEach( productos => {
             acum += "\ncod"+ productos.id +" "+ productos.name +"\n"+productos.description +"\n"+"$"+ productos.price +"\n"
         })
-        return acum
+        return acum;
     }
 
-    buscarProductos(id){
+    buscar(id){
         return this.listProductos.find(el => el.id == id)
     }
 }
 
+class CarritoController{
+    constructor(){
+        this.listCompras= []
+    }
+
+    selector(productos){
+        this.listCompras.push(productos)
+    }
+
+    totalCalculate(){
+        let acumulado= 0
+        this.listCompras.forEach(productos =>{
+            acumulado += productos.price * productos.cantidad
+        })
+        return acumulado;
+    }
+}
+
 const controladorProductos= new ControllerProductos()
-controladorProductos.cargarProductos()
+const controladorCarrito= new CarritoController()
 
-controladorProductos.mostrarProductos()
-alert("Lista de productos:\n"+ controladorProductos.mostrarProductos())
+let rta= ""
 
-let id =prompt("cod-1000 Whey Protein ENA\n\ncod-500 Whey Protein ENA\n\ncod-1500 Whey Protein StarNutrition \n\ncod-750 Creatina ENA 500g \n\nIngrese el codigo del producto deseado")
-console.log(controladorProductos.buscarProductos(id))
+do{
+    controladorProductos.cargar()
+    
+    alert("Lista de productos:\n"+ controladorProductos.mostrar())
+    
+    let id =prompt("cod-1000 Whey Protein ENA\n\ncod-500 Whey Protein ENA\n\ncod-1500 Whey Protein StarNutrition \n\ncod-750 Creatina ENA 500g \n\nIngrese el codigo del producto deseado")
+    
+    const producto = controladorProductos.buscar(id)
+    
+    controladorCarrito.selector(producto)
+    alert("El valor abonar es $"+controladorCarrito.totalCalculate())
+
+    rta = prompt("ingrese pagar para terminar la compra \no presione cualquier tecla para continuar comprando")
+
+}while (rta != "pagar")
+
+
+
 /*let acum =""
 
 listProductos.forEach(productos => {
