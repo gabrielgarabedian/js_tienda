@@ -70,26 +70,36 @@ class Productos{
         this.stock= stock
         this.cantidad= 1
     }
+
 }
 
 class ControllerProductos{
     constructor(){
         this.listProductos = []
     }
-
+    
     cargar() {
         this.listProductos= [
             new Productos(1000, "Whey Protein ENA", "Proteina de la marca ENA\nSabores: Frutilla - Manzana Verde - Chocolate",1500,125),
             new Productos(500, "Whey Protein ENA", "Proteina de la marca Ultra tech\nSabores: Cookie - Vainilla - Chocolate",1000,70),
             new Productos(1500, "Whey Protein StarNutrition","Proteina de leche de la marca StarNutrition",8000,55),
-            new Productos(750, "Creatina ENA 500g", "Creatina de la marca ENA de 500g\nSabor: Frutilla - Mango - Maracuya",790,0),
-            ]
+            new Productos(750, "Creatina ENA 500g", "Creatina de la marca ENA de 500g\nSabor: Frutilla - Mango - Maracuya",790,10),
+        ]
+    }
+    
+    actualizar(){
+        let acum= ""
+        this.listProductos.forEach(productos =>{
+            acum += "\nCod" + productos.id + " "+ "el precio actual es $"+ Math.round(productos.price * 1.10) + "\n"
+            
+        })
+        return acum
+    
     }
 
     mostrar(){
-
-        let acum =""
-        this.listProductos.forEach( productos => {
+        let acum ="" 
+        this.listProductos.map(productos =>{
             acum += "\ncod"+ productos.id +" "+ productos.name +"\n"+productos.description +"\n"+"$"+ productos.price +"\n"
         })
         return acum;
@@ -98,6 +108,7 @@ class ControllerProductos{
     buscar(id){
         return this.listProductos.find(el => el.id == id)
     }
+
 }
 
 class CarritoController{
@@ -109,6 +120,10 @@ class CarritoController{
         this.listCompras.push(productos)
     }
 
+    eliminate(producto){
+        this.listCompras.pop(producto)
+    }
+    
     totalCalculate(){
         let acumulado= 0
         this.listCompras.forEach(productos =>{
@@ -116,15 +131,18 @@ class CarritoController{
         })
         return acumulado;
     }
+
 }
 
 const controladorProductos= new ControllerProductos()
 const controladorCarrito= new CarritoController()
+controladorProductos.cargar()
+controladorProductos.actualizar()
 
 let rta= ""
+let salida= ""
 
 do{
-    controladorProductos.cargar()
     
     alert("Lista de productos:\n"+ controladorProductos.mostrar())
     
@@ -132,29 +150,63 @@ do{
     
     const producto = controladorProductos.buscar(id)
     
-    controladorCarrito.selector(producto)
-    alert("El valor abonar es $"+controladorCarrito.totalCalculate())
+    if (producto){
+        
+        controladorCarrito.selector(producto)
 
-    rta = prompt("ingrese pagar para terminar la compra \no presione cualquier tecla para continuar comprando")
-
+    }
+    else{
+        alert("el codigo de producto es incorrecto o inexistente")
+    }
+    
+    rta = prompt("ingrese pagar para terminar la compra \no presione cualquier tecla para continuar comprando").toLowerCase()
+    
 }while (rta != "pagar")
 
+alert("El valor abonar es $" + controladorCarrito.totalCalculate())
 
+let pago= prompt("Seleccione el medio de pago:\nAhora3\nAhora6\nEfectivo").toLowerCase()
 
-/*let acum =""
+do{
+    switch (pago) {
+        case "ahora3":
+            montoApagar = controladorCarrito.totalCalculate() /3
+            alert("El monto a pagar por cuota es $ "+ montoApagar.toFixed(2) + " en 3 cuotas sin interes")
+            console.log("El monto a pagar por cuota es $ "+ montoApagar.toFixed(2) +"\n El pago esta siendo procesado")
+            break;
+            
+            case "ahora6":
+                montoApagar = controladorCarrito.totalCalculate() /6
+                alert("El monto a pagar por cuota es $ "+ montoApagar.toFixed(2) + " en 6 cuotas sin interes")
+                console.log("El monto a pagar por cuota es $ "+ montoApagar.toFixed(2) + "\nEl pago esta siendo procesado")
+                break;
+                
+                case "efectivo":
+                    montoApagar = controladorCarrito.totalCalculate() 
+                    alert("El monto a pagar es $"+ montoApagar + "\nPuede abonar con transferencia bancaria o al retirar")
+                    console.log("El monto a pagar en efectivo es $ "+ montoApagar )
+                    break;
+                    
+        default:
+            alert("El medio de pago elegido o dato es incorrecto")
+            break;
+        }
+        rta =prompt("ingrese esc para salir o cualquier tecla para volver a ver el monto a pagar")
+} while (rta != "esc")
 
-listProductos.forEach(productos => {
-    acum+="\ncod"+ productos.id +" "+ productos.name +"\n"+productos.description +"\n"+"$"+ productos.price +"\n"
-});
-alert( acum)
+alert("Los precios de los productos se actualizaran \npor una suba en de la tasa aduanera:\n"+ controladorProductos.actualizar())
 
-
-let id =prompt("cod-1000 Whey Protein ENA\n\ncod-500 Whey Protein ENA\n\ncod-1500 Whey Protein StarNutrition \n\ncod-750 Creatina ENA 500g \n\nIngrese el codigo del producto deseado")
-
-function buscar(id){
-    return listProductos.find(el => el.id == id)
-}
-
-const art = buscar(id)
-alert(art.name + " " + "$"+art.price) */
-
+        /*if (producto){
+        
+            controladorCarrito.selector(producto)
+            if (true) { 
+                let opcion = prompt (" elige si para continuar, no para eliminar el producto").toLowerCase
+                if (opcion == "no"){
+                    controladorCarrito.eliminate(producto)
+                    alert("elproducto se ha eliminado")
+    
+                }else {
+                    alert("se ha cargado con exito")
+                }
+            }
+        }*/
