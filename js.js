@@ -311,9 +311,12 @@ alert("Los precios de los productos se actualizaran \npor una suba en de la tasa
                         
                         alert("el producto se cargo al carrito exitosamente")
                         
-                    }else {
+                    }if (opcion == 2){
                         alert("se ha quitado del carrito")
                         controladorCarrito.eliminate(producto)
+                    }
+                    else {
+                        alert("la opcion es invalida")
                     }
     
             }
